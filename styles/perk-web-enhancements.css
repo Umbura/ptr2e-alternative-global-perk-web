@@ -1,0 +1,81 @@
+﻿.ptr2e#perk-web-app [data-application-part="web"] .scroll {
+  background: #080a10;
+}
+
+.ptr2e#perk-web-app [data-application-part="web"] .scroll.ptr2e-alternative-global-perk-web-panning {
+  cursor: move;
+}
+
+.ptr2e#perk-web-app [data-application-part="web"] svg {
+  z-index: 1;
+}
+
+.ptr2e#perk-web-app [data-application-part="web"] section.perk-grid {
+  isolation: isolate;
+  position: relative;
+  z-index: 2;
+}
+
+.ptr2e#perk-web-app [data-application-part="web"] section.perk-grid.pokemon-sector-web {
+  background:
+    radial-gradient(circle at 10552px 2200px, rgba(63, 104, 216, .30), transparent 2350px),
+    radial-gradient(circle at 11512px 6360px, rgba(195, 109, 56, .28), transparent 2350px),
+    radial-gradient(circle at 10552px 10552px, rgba(138, 85, 230, .30), transparent 2350px),
+    radial-gradient(circle at 2200px 10552px, rgba(79, 143, 163, .30), transparent 2350px),
+    radial-gradient(circle at 1240px 6360px, rgba(185, 74, 138, .30), transparent 2350px),
+    radial-gradient(circle at 2200px 2200px, rgba(216, 79, 88, .30), transparent 2350px),
+    radial-gradient(circle at 6680px 8280px, rgba(169, 176, 202, .24), transparent 2250px),
+    radial-gradient(circle at 6400px 6600px, rgba(32, 36, 52, .48), transparent 6200px);
+}
+
+.ptr2e#perk-web-app [data-application-part="web"] section.perk-grid > svg.perk-lines {
+  height: 100%;
+  inset: 0;
+  overflow: visible;
+  pointer-events: none;
+  position: absolute;
+  width: 100%;
+  z-index: 1;
+}
+
+.ptr2e#perk-web-app [data-application-part="web"] section.perk-grid .perk {
+  position: relative;
+  z-index: 3;
+}
+
+.ptr2e#perk-web-app [data-application-part="web"] section.perk-grid.pokemon-sector-web .perk.root {
+  --root-star-rgb: 169 176 202;
+  box-shadow:
+    0 0 10px 3px rgb(255 255 255 / 0.42),
+    0 0 22px 8px rgb(var(--root-star-rgb) / 0.50),
+    inset 0 0 0 2px rgb(var(--root-star-rgb) / 0.82);
+}
+
+.ptr2e#perk-web-app [data-application-part="web"] section.perk-grid.pokemon-sector-web .perk.root[data-x="35"][data-y="35"] {
+  --root-star-rgb: 216 79 88;
+}
+
+.ptr2e#perk-web-app [data-application-part="web"] section.perk-grid.pokemon-sector-web .perk.root[data-x="165"][data-y="35"] {
+  --root-star-rgb: 63 104 216;
+}
+
+.ptr2e#perk-web-app [data-application-part="web"] section.perk-grid.pokemon-sector-web .perk.root[data-x="180"][data-y="100"] {
+  --root-star-rgb: 195 109 56;
+}
+
+.ptr2e#perk-web-app [data-application-part="web"] section.perk-grid.pokemon-sector-web .perk.root[data-x="165"][data-y="165"] {
+  --root-star-rgb: 138 85 230;
+}
+
+.ptr2e#perk-web-app [data-application-part="web"] section.perk-grid.pokemon-sector-web .perk.root[data-x="35"][data-y="165"] {
+  --root-star-rgb: 79 143 163;
+}
+
+.ptr2e#perk-web-app [data-application-part="web"] section.perk-grid.pokemon-sector-web .perk.root[data-x="20"][data-y="100"] {
+  --root-star-rgb: 185 74 138;
+}
+
+.ptr2e#perk-web-app [data-application-part="web"] section.perk-grid.pokemon-sector-web .perk.root[data-x="105"][data-y="130"] {
+  --root-star-rgb: 169 176 202;
+}
+
