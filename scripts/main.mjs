@@ -12,6 +12,11 @@ const ROOT_COLORS = {
 
 const PURCHASED_CLASSES = new Set(["purchased", "auto-unlocked"]);
 const ROOT_COLOR_VALUES = Object.values(ROOT_COLORS);
+const WHEEL_ZOOM_SENSITIVITY = 0.00045;
+const WHEEL_ZOOM_MIN_FACTOR = 0.96;
+const WHEEL_ZOOM_MAX_FACTOR = 1.04;
+const WHEEL_ZOOM_REDRAW_DELAY_MS = 140;
+const WHEEL_ZOOM_STATES = new WeakMap();
 
 function clamp(value, min, max) {
   return Math.min(Math.max(value, min), max);
@@ -330,7 +335,7 @@ function renderPerkWeb(app) {
   attachNavigation(app, scroll);
 }
 
-function customZoom(app, zoomAmount = app?._zoomAmount, updateHud = true, pointer = null) {
+function customZoom(app, zoomAmount = app?._zoomAmount, updateHud = true, pointer = null, options = {}) {
   const root = appElement(app);
   const grid = root?.querySelector?.(".perk-grid");
   const scroll = root?.querySelector?.('[data-application-part="web"] .scroll');
@@ -352,10 +357,71 @@ function customZoom(app, zoomAmount = app?._zoomAmount, updateHud = true, pointe
 
   app._zoomAmount = nextZoom;
   grid.style.zoom = String(nextZoom);
-  renderPerkWeb(app);
+  if (options.redraw !== false) renderPerkWeb(app);
   scroll.scrollTo(after);
 
   if (updateHud) app.render?.({ parts: ["hudZoom"] });
+}
+
+function scheduleDeferredWheelRedraw(app, state) {
+  clearTimeout(state.redrawTimer);
+  state.redrawTimer = setTimeout(() => {
+    state.redrawTimer = null;
+    renderPerkWeb(app);
+    app.render?.({ parts: ["hudZoom"] });
+  }, WHEEL_ZOOM_REDRAW_DELAY_MS);
+}
+
+function scheduleWheelZoom(app, scroll, event) {
+  let state = WHEEL_ZOOM_STATES.get(scroll);
+  if (!state) {
+    state = {
+      delta: 0,
+      frame: null,
+      pointer: { left: 0, top: 0 },
+      redrawTimer: null,
+    };
+    WHEEL_ZOOM_STATES.set(scroll, state);
+  }
+
+  const rect = scroll.getBoundingClientRect();
+  state.delta += event.deltaY;
+  state.pointer = {
+    left: event.clientX - rect.left,
+    top: event.clientY - rect.top,
+  };
+
+  if (state.frame !== null) return;
+
+  state.frame = requestAnimationFrame(() => {
+    const delta = state.delta;
+    state.delta = 0;
+    state.frame = null;
+
+    const factor = clamp(
+      Math.exp(-delta * WHEEL_ZOOM_SENSITIVITY),
+      WHEEL_ZOOM_MIN_FACTOR,
+      WHEEL_ZOOM_MAX_FACTOR,
+    );
+
+    customZoom(app, (Number(app._zoomAmount) || 1) * factor, false, state.pointer, { redraw: false });
+    scheduleDeferredWheelRedraw(app, state);
+  });
+}
+
+function attachLegacyWheelOverride(app, scroll) {
+  if (!scroll || scroll.dataset.ptr2eAlternativeGlobalPerkWebWheelOverride === "true") return;
+  scroll.dataset.ptr2eAlternativeGlobalPerkWebWheelOverride = "true";
+
+  const listenerTarget = scroll.parentElement ?? scroll;
+  listenerTarget.addEventListener("wheel", (event) => {
+    if (!scroll.contains(event.target)) return;
+
+    event.preventDefault();
+    event.stopPropagation();
+    event.stopImmediatePropagation();
+    scheduleWheelZoom(app, scroll, event);
+  }, { passive: false, capture: true });
 }
 
 function isBackgroundClick(scroll, event) {
@@ -367,6 +433,7 @@ function isBackgroundClick(scroll, event) {
 function attachNavigation(app, scroll) {
   if (!scroll || scroll.dataset.ptr2eAlternativeGlobalPerkWeb === "true") return;
   if (scroll.dataset.ptr2eFreeZoom === "true") {
+    attachLegacyWheelOverride(app, scroll);
     scroll.dataset.ptr2eAlternativeGlobalPerkWeb = "legacy-system-patch";
     return;
   }
@@ -423,12 +490,7 @@ function attachNavigation(app, scroll) {
     event.stopPropagation();
     event.stopImmediatePropagation();
 
-    const factor = event.deltaY > 0 ? 0.88 : 1.12;
-    const rect = scroll.getBoundingClientRect();
-    customZoom(app, (Number(app._zoomAmount) || 1) * factor, false, {
-      left: event.clientX - rect.left,
-      top: event.clientY - rect.top,
-    });
+    scheduleWheelZoom(app, scroll, event);
   }, { passive: false, capture: true });
 
   scroll.addEventListener("click", (event) => {

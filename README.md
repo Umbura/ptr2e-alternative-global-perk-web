@@ -12,9 +12,12 @@ This module adds an alternative Global Perk Web presentation inspired by the lar
 - Highlights available and connected routes.
 - Highlights skill-boost related routes with a distinct color.
 - Adds mouse wheel zoom centered on the cursor.
+- Smooths mouse wheel zoom by applying wheel input once per animation frame.
+- Defers expensive Perk Web line redraws until wheel zoom input settles.
 - Adds right-click drag panning.
 - Preserves the system's keyboard panning behavior.
 - Avoids duplicate navigation listeners when an older local system patch is already present.
+- Overrides legacy wheel zoom handling when an older local system patch is detected.
 - Does not alter actor data, item data, compendium data, or PTR2e system files.
 
 ## Compatibility
