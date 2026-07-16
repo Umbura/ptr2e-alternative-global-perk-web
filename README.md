@@ -19,7 +19,7 @@ Paste this manifest URL into Foundry's **Install Module** dialog:
 - Highlights skill-boost related routes with a distinct color.
 - Adds mouse wheel zoom centered on the cursor.
 - Smooths mouse wheel zoom by applying wheel input once per animation frame.
-- Keeps wheel zoom responsive by using a faster frame-based zoom step.
+- Keeps wheel zoom responsive by using a tuned frame-based zoom step.
 - Defers expensive Perk Web line redraws until wheel zoom input settles.
 - Adds right-click drag panning.
 - Preserves the system's keyboard panning behavior.
