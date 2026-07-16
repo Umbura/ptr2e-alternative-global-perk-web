@@ -12,9 +12,9 @@ const ROOT_COLORS = {
 
 const PURCHASED_CLASSES = new Set(["purchased", "auto-unlocked"]);
 const ROOT_COLOR_VALUES = Object.values(ROOT_COLORS);
-const WHEEL_ZOOM_SENSITIVITY = 0.00045;
-const WHEEL_ZOOM_MIN_FACTOR = 0.96;
-const WHEEL_ZOOM_MAX_FACTOR = 1.04;
+const WHEEL_ZOOM_SENSITIVITY = 0.001;
+const WHEEL_ZOOM_MIN_FACTOR = 0.9;
+const WHEEL_ZOOM_MAX_FACTOR = 1.1;
 const WHEEL_ZOOM_REDRAW_DELAY_MS = 140;
 const WHEEL_ZOOM_STATES = new WeakMap();
 
