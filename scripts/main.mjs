@@ -13,8 +13,6 @@ const ROOT_COLORS = {
 const PURCHASED_CLASSES = new Set(["purchased", "auto-unlocked"]);
 const ROOT_COLOR_VALUES = Object.values(ROOT_COLORS);
 const WHEEL_ZOOM_SENSITIVITY = 0.0012;
-const WHEEL_ZOOM_MIN_FACTOR = 0.88;
-const WHEEL_ZOOM_MAX_FACTOR = 1.12;
 const WHEEL_ZOOM_REDRAW_DELAY_MS = 170;
 const WHEEL_ZOOM_STATES = new WeakMap();
 
@@ -398,11 +396,7 @@ function scheduleWheelZoom(app, scroll, event) {
     state.delta = 0;
     state.frame = null;
 
-    const factor = clamp(
-      Math.exp(-delta * WHEEL_ZOOM_SENSITIVITY),
-      WHEEL_ZOOM_MIN_FACTOR,
-      WHEEL_ZOOM_MAX_FACTOR,
-    );
+    const factor = Math.exp(-delta * WHEEL_ZOOM_SENSITIVITY);
 
     customZoom(app, (Number(app._zoomAmount) || 1) * factor, false, state.pointer, { redraw: false });
     scheduleDeferredWheelRedraw(app, state);

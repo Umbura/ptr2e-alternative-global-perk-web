@@ -20,6 +20,7 @@ Paste this manifest URL into Foundry's **Install Module** dialog:
 - Adds mouse wheel zoom centered on the cursor.
 - Smooths mouse wheel zoom by applying wheel input once per animation frame.
 - Keeps wheel zoom responsive by using a tuned frame-based zoom step.
+- Uses the user's wheel or trackpad delta directly instead of capping zoom speed per frame.
 - Defers expensive Perk Web line redraws until wheel zoom input settles.
 - Adds right-click drag panning.
 - Preserves the system's keyboard panning behavior.
