@@ -4,6 +4,8 @@ Foundry VTT module for Pokemon Tabletop Reunited: Evolved.
 
 This module adds an alternative Global Perk Web presentation inspired by the large passive skill tree layout from Path of Exile 2.
 
+![PTR2e Alternative Global Perk Web preview](docs/screenshot.png)
+
 ## Installation
 
 Paste this manifest URL into Foundry's **Install Module** dialog:
