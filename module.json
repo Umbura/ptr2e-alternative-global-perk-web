@@ -2,7 +2,7 @@
   "id": "ptr2e-alternative-global-perk-web",
   "title": "PTR2e Alternative Global Perk Web",
   "description": "Adds an alternative Path of Exile 2 inspired visual style and navigation controls to the PTR2e Global Perk Web.",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "authors": [
     {
       "name": "PTR2e Module Extensions"
@@ -26,5 +26,9 @@
   "styles": [
     "styles/perk-web-enhancements.css"
   ],
-  "url": "https://github.com/Umbura/ptr2e-alternative-global-perk-web"
+  "url": "https://github.com/Umbura/ptr2e-alternative-global-perk-web",
+  "bugs": "https://github.com/Umbura/ptr2e-alternative-global-perk-web/issues",
+  "readme": "https://github.com/Umbura/ptr2e-alternative-global-perk-web#readme",
+  "manifest": "https://raw.githubusercontent.com/Umbura/ptr2e-alternative-global-perk-web/main/module.json",
+  "download": "https://github.com/Umbura/ptr2e-alternative-global-perk-web/archive/refs/heads/main.zip"
 }
